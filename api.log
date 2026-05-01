@@ -1,0 +1,698 @@
+/Users/frankyucramendoza/projects/fleet-api/main.py:17: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  Base = declarative_base()
+INFO:     Started server process [51686]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+🚀 Fleet API starting...
+📍 http://localhost:8080
+INFO:     127.0.0.1:61556 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61580 - "POST /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61582 - "POST /api/companies/comp001/vehicles HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61604 - "POST /api/companies HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: companies.ruc
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/applications.py", line 1138, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 107, in app
+    response = await f(request)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 316, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/concurrency.py", line 38, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/Users/frankyucramendoza/projects/fleet-api/main.py", line 214, in create_company
+    db.commit()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+    self._flush(objects)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4467, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+    flush_context.execute()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: companies.ruc
+[SQL: INSERT INTO companies (id, ruc, name, address, phone, created_at) VALUES (?, ?, ?, ?, ?, ?)]
+[parameters: ('08ffcf24', '20604567891', 'Transportes Frank SAC', None, None, '2026-04-30 19:56:33.752459')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     127.0.0.1:61606 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61625 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61627 - "POST /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61629 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61665 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61667 - "POST /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61669 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62826 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62828 - "GET /api/companies/53d1e78a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51902 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51904 - "POST /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51931 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51937 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51959 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51961 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52292 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56359 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56361 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56363 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56365 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57505 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57507 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57529 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57531 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57533 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58749 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58751 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60152 - "POST /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60163 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60182 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60184 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60186 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62073 - "POST /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62079 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62081 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62083 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62563 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62565 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62567 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62958 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62960 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64076 - "POST /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64082 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64116 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64118 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64393 - "GET /api/companies/15e85baf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64395 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64397 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64399 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64576 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64586 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64588 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64590 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64971 - "POST /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64978 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64980 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64982 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65241 - "POST /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65247 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65249 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65251 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65482 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65484 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65486 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49525 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49527 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49529 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49531 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49533 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49535 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51584 - "POST /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51594 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51596 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51627 - "POST /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51629 - "POST /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51631 - "POST /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51633 - "POST /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51635 - "POST /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51637 - "POST /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51639 - "POST /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51641 - "POST /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51679 - "POST /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51681 - "POST /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51683 - "POST /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51685 - "POST /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51687 - "POST /api/a1701379/drivers HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: drivers.dni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/applications.py", line 1138, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 107, in app
+    response = await f(request)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 316, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/concurrency.py", line 38, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/Users/frankyucramendoza/projects/fleet-api/main.py", line 290, in create_driver
+    db.commit()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+    self._flush(objects)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4467, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+    flush_context.execute()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: drivers.dni
+[SQL: INSERT INTO drivers (id, company_id, dni, name, license_number, license_type, license_expiry, phone, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('ed591311', 'a1701379', '74895377', 'YOSDAN MENDOZA HUALLPA', '', None, None, '', 'active', '2026-04-30 21:25:40.883094')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     127.0.0.1:51693 - "POST /api/15e85baf/drivers HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: drivers.dni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/applications.py", line 1138, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 107, in app
+    response = await f(request)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 316, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/concurrency.py", line 38, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/Users/frankyucramendoza/projects/fleet-api/main.py", line 290, in create_driver
+    db.commit()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+    self._flush(objects)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4467, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+    flush_context.execute()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: drivers.dni
+[SQL: INSERT INTO drivers (id, company_id, dni, name, license_number, license_type, license_expiry, phone, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('270a2a5f', '15e85baf', '23930858', 'EGIDIO YUCRA BOLAÑOS', 'Z23930858', None, None, '986043222', 'active', '2026-04-30 21:25:40.892769')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     127.0.0.1:51695 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51699 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51701 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51703 - "POST /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51737 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51739 - "GET /api/companies/a1701379 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51741 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51743 - "GET /api/companies/15e85baf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51745 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /api/companies/53d1e78a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51749 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51751 - "GET /api/companies/a1701379 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51753 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51755 - "GET /api/companies/15e85baf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51757 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51759 - "GET /api/companies/53d1e78a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51761 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52140 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52142 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52144 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52146 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52655 - "POST /api/a1701379/drivers HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: drivers.dni
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/protocols/http/h11_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/applications.py", line 1138, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 121, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 107, in app
+    response = await f(request)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 426, in app
+    raw_response = await run_endpoint_function(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/fastapi/routing.py", line 316, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/starlette/concurrency.py", line 38, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/Users/frankyucramendoza/projects/fleet-api/main.py", line 290, in create_driver
+    db.commit()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2030, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1311, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+    ret_value = fn(self, *arg, **kw)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1286, in _prepare_impl
+    self.session.flush()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4331, in flush
+    self._flush(objects)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4467, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 121, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 4427, in _flush
+    flush_context.execute()
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/orm/persistence.py", line 1048, in _emit_insert_statements
+    result = connection.execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1419, in execute
+    return meth(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/sql/elements.py", line 527, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2363, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/frankyucramendoza/projects/fleet-api/venv/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: drivers.dni
+[SQL: INSERT INTO drivers (id, company_id, dni, name, license_number, license_type, license_expiry, phone, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)]
+[parameters: ('94366d1d', 'a1701379', '74895377', 'YOSDAN MENDOZA HUALLPA', 'Z-74895377', None, None, '927171877', 'active', '2026-04-30 21:29:20.582073')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+INFO:     127.0.0.1:52657 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52659 - "POST /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52681 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52683 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52685 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52687 - "GET /api/companies/a1701379 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52689 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52691 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52693 - "GET /api/companies/15e85baf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52695 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52697 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52699 - "GET /api/companies/53d1e78a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52701 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52703 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53255 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53265 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53307 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53309 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53311 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53313 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53315 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53317 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53319 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53321 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53323 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53325 - "GET /api/a1701379/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49412 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49414 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49576 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49578 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49580 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49582 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49841 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49843 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49845 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50062 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50243 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50245 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50589 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50591 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50593 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50595 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50770 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50772 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50774 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52847 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52962 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53329 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53657 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53663 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53665 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53667 - "POST /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54236 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54238 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54684 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55044 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56014 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56016 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56492 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56751 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56761 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57078 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57080 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57175 - "POST /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.28:58285 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59789 - "GET /api/a1701379/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59791 - "GET /api/a1701379/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59793 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59793 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59794 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59795 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59797 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59797 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59798 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59799 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59798 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59797 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59799 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59797 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59798 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59799 - "GET /api/a1701379/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59797 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59798 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59799 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59803 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59803 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59804 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59805 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59806 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59807 - "GET /api/15e85baf/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59808 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59811 - "GET /api/a1701379/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59809 - "GET /api/a1701379/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59810 - "GET /api/a1701379/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59813 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59814 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59812 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59816 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59816 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59817 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59818 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59816 - "GET /files/53d1e78a/Vehicles/X6G074/SOAT/SOAT_X6G074.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.30:59819 - "GET /files/53d1e78a/Vehicles/BUC-988/Seguros/POLIZA_SEGURO_BUC-988.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.30:59821 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59821 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59822 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59823 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59821 - "GET /files/53d1e78a/Vehicles/X6G074/SOAT/SOAT_X6G074.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.30:59821 - "GET /files/53d1e78a/Vehicles/X4T700/TARJETA_PROPIEDAD_X4T700.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.30:59821 - "GET /files/53d1e78a/_PlanesContingencia/PLAN_CONTINGENCIA_F1G977_A3S907.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.28:60404 - "HEAD /files/15e85baf/Vehicles/X5U-835/SOAT/SOAT_X5U-835.pdf HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60439 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60462 - "GET /api/15e85baf/vehicles HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60464 - "GET /api/15e85baf/documents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60490 - "HEAD /files/15e85baf/Vehicles/X5U-835/SOAT/SOAT_X5U-835.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.28:60607 - "HEAD /files/15e85baf/Vehicles/X5U-835/SOAT/SOAT_X5U-835.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.30:59825 - "GET /api/companies HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59825 - "GET /api/53d1e78a/vehicles HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59826 - "GET /api/53d1e78a/drivers HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59827 - "GET /api/53d1e78a/documents HTTP/1.1" 200 OK
+INFO:     192.168.100.30:59825 - "GET /files/53d1e78a/Vehicles/X6G074/SOAT/SOAT_X6G074.pdf HTTP/1.1" 404 Not Found
+INFO:     192.168.100.28:60654 - "HEAD /files/15e85baf/Vehicles/X5U-835/SOAT/SOAT_X5U-835.pdf HTTP/1.1" 404 Not Found

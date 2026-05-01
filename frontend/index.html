@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fleet Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: #F3F4F6; 
+            color: #111827; 
+            min-height: 100vh; 
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .header { 
+            background: #FFFFFF; 
+            padding: 16px 20px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-icon { 
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #1A1A1A 0%, #374151 100%);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.1rem;
+        }
+        .header-text h1 { font-size: 1rem; font-weight: 700; color: #111827; }
+        .header-text p { font-size: 0.7rem; color: #6B7280; }
+        .header button {
+            background: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: #374151;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .header button:hover { background: #F3F4F6; }
+        .header button:active { transform: scale(0.98); }
+        
+        .tabs { 
+            display: flex; 
+            gap: 8px; 
+            padding: 16px 20px; 
+            overflow-x: auto;
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab { 
+            padding: 10px 18px; 
+            background: #F9FAFB; 
+            border-radius: 25px; 
+            font-size: 0.8rem; 
+            white-space: nowrap; 
+            cursor: pointer; 
+            border: 1px solid #E5E7EB;
+            color: #6B7280;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .tab.active { 
+            background: #1A1A1A; 
+            color: #FFFFFF; 
+            border-color: #1A1A1A;
+        }
+        .tab:not(.active):hover { background: #F3F4F6; }
+        
+        .content { padding: 20px; max-width: 900px; margin: 0 auto; }
+        
+        .stats-row { 
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px; 
+            margin-bottom: 24px; 
+        }
+        .stat-card { 
+            background: #FFFFFF; 
+            border-radius: 16px; 
+            padding: 20px 16px; 
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid #E5E7EB;
+        }
+        .stat-icon { 
+            width: 40px; height: 40px;
+            background: #F3F4F6;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.2rem;
+        }
+        .stat-value { 
+            font-size: 1.75rem; 
+            font-weight: 700; 
+            color: #111827;
+        }
+        .stat-label { 
+            font-size: 0.7rem; 
+            color: #9CA3AF; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        
+        .section { margin-bottom: 24px; }
+        .section-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            margin-bottom: 14px; 
+        }
+        .section-title { 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+            color: #374151; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .section-badge {
+            background: #E5E7EB;
+            color: #6B7280;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        
+        .card { 
+            background: #FFFFFF; 
+            border-radius: 16px; 
+            padding: 18px; 
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            border: 1px solid #E5E7EB;
+        }
+        
+        .card-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 8px; 
+        }
+        .card-title { 
+            font-size: 1rem; 
+            font-weight: 600; 
+            color: #111827;
+        }
+        .card-badge { 
+            background: #F3F4F6; 
+            color: #374151; 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        .card-badge.green { background: #D1FAE5; color: #059669; }
+        .card-badge.yellow { background: #FEF3C7; color: #D97706; }
+        .card-badge.red { background: #FEE2E2; color: #DC2626; }
+        
+        .card-meta { 
+            font-size: 0.8rem; 
+            color: #6B7280;
+        }
+        
+        .doc-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin-top: 12px; 
+        }
+        .doc-item { 
+            background: #F9FAFB; 
+            padding: 10px 14px; 
+            border-radius: 10px; 
+            font-size: 0.75rem;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #E5E7EB;
+            width: 100%;
+        }
+        .doc-item:hover { background: #F3F4F6; border-color: #D1D5DB; }
+        .doc-item:active { transform: scale(0.98); }
+        .doc-item .doc-icon { font-size: 1rem; }
+        .doc-item .doc-info { flex: 1; font-weight: 500; }
+        .doc-item .doc-date { 
+            font-size: 0.65rem; 
+            color: #9CA3AF;
+            font-weight: 500;
+        }
+        .doc-item.vence-soon { background: #FEF3C7; border-color: #F59E0B; }
+        .doc-item.vence-soon .doc-date { color: #D97706; }
+        .doc-item.expired { background: #FEE2E2; border-color: #EF4444; }
+        .doc-item.expired .doc-date { color: #DC2626; }
+        
+        .empty { 
+            text-align: center; 
+            padding: 40px 20px; 
+            color: #9CA3AF; 
+            font-size: 0.85rem; 
+        }
+        .empty-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+        
+        .loading { 
+            text-align: center; 
+            padding: 60px 20px; 
+            color: #9CA3AF; 
+        }
+        .loading-spinner {
+            width: 32px; height: 32px;
+            border: 3px solid #E5E7EB;
+            border-top-color: #1A1A1A;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* PDF Modal */
+        #pdfModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 9999;
+            flex-direction: column;
+        }
+        #pdfModal.active { display: flex; }
+        .pdf-header {
+            background: #111;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .pdf-title { 
+            font-size: 0.85rem; 
+            color: #fff; 
+            font-weight: 600;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 16px;
+        }
+        .pdf-close {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .pdf-content { 
+            flex: 1;
+            overflow: auto;
+            position: relative;
+        }
+        .pdf-content iframe { 
+            width: 100%; height: 100%; border: none; position: absolute; top: 0; left: 0;
+        }
+        .pdf-actions { display: none; }
+        
+        .footer { 
+            text-align: center; 
+            padding: 24px 20px; 
+            color: #9CA3AF; 
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .content { padding: 28px 32px; }
+            .header { padding: 20px 28px; }
+            .header h1 { font-size: 1.15rem; }
+            .header-text p { font-size: 0.75rem; }
+            .tabs { padding: 16px 28px; gap: 10px; }
+            .tab { padding: 12px 24px; font-size: 0.9rem; }
+            .stats-row { gap: 20px; }
+            .stat-card { padding: 28px 24px; }
+            .stat-value { font-size: 2.25rem; }
+            .stat-label { font-size: 0.8rem; }
+            .section-title { font-size: 0.9rem; }
+            .card { padding: 22px; border-radius: 20px; }
+            .card-title { font-size: 1.1rem; }
+            .doc-item { width: auto; flex: 1; min-width: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="header-icon">🚛</div>
+            <div class="header-text">
+                <h1>Fleet Manager</h1>
+                <p>Sol Transportes</p>
+            </div>
+        </div>
+        <button onclick="refresh()">🔄 Actualizar</button>
+    </div>
+    
+    <div class="tabs" id="companyTabs"></div>
+    <div class="content" id="content">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <div>Cargando...</div>
+        </div>
+    </div>
+    
+    <div class="footer">Fleet Manager v1.0 — © 2026</div>
+    
+    <!-- PDF Modal -->
+    <div id="pdfModal">
+        <div class="pdf-header">
+            <div class="pdf-title" id="pdfTitle">Documento</div>
+            <button class="pdf-close" onclick="closePdf()">✕ Cerrar</button>
+        </div>
+        <div class="pdf-content">
+            <iframe id="pdfFrame" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://192.168.100.28:8080/api';
+        const FILE_API = 'http://192.168.100.28:8080/files';
+        let companies = [];
+        let currentCompany = null;
+        let currentDocPath = null;
+        
+        function refresh() { loadData(); }
+        
+        async function get(endpoint) {
+            try { 
+                const r = await fetch(`${API}${endpoint}?_=${Date.now()}`, { cache: 'no-store' });
+                return await r.json(); 
+            }
+            catch { return null; }
+        }
+        
+        async function loadData() {
+            const data = await get('/companies');
+            if (!data?.companies) {
+                document.getElementById('content').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div>No se pudo conectar a la API</div>';
+                return;
+            }
+            companies = data.companies;
+            renderTabs();
+            if (companies.length) selectCompany(companies[0].id);
+        }
+        
+        function renderTabs() {
+            document.getElementById('companyTabs').innerHTML = companies.map(c => 
+                `<button class="tab${c.id === currentCompany?.id ? ' active' : ''}" onclick="selectCompany('${c.id}')">${c.name.split(' ').slice(0,3).join(' ')}</button>`
+            ).join('');
+        }
+        
+        async function selectCompany(id) {
+            currentCompany = companies.find(c => c.id === id);
+            renderTabs();
+            document.getElementById('content').innerHTML = '<div class="loading"><div class="loading-spinner"></div><div>Cargando...</div></div>';
+            
+            const [vehicles, drivers, docs] = await Promise.all([
+                get(`/${id}/vehicles`), get(`/${id}/drivers`), get(`/${id}/documents`)
+            ]);
+            
+            const vList = vehicles?.vehicles || [];
+            const dList = drivers?.drivers || [];
+            const docList = docs?.documents || [];
+            
+            let html = `
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">🚛</div>
+                        <div class="stat-value">${vList.length}</div>
+                        <div class="stat-label">Vehículos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👤</div>
+                        <div class="stat-value">${dList.length}</div>
+                        <div class="stat-label">Conductores</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-value">${docList.length}</div>
+                        <div class="stat-label">Documentos</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">Vehículos</div>
+                        <div class="section-badge">${vList.length}</div>
+                    </div>
+            `;
+            
+            if (!vList.length) html += '<div class="card"><div class="empty"><div class="empty-icon">🚛</div>Sin vehículos registrados</div></div>';
+            else vList.forEach(v => {
+                const vDocs = docList.filter(d => d.vehicle_id === v.id);
+                html += `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">${v.plate}</div>
+                            <span class="card-badge">${v.type || 'Sin tipo'}</span>
+                        </div>
+                        <div class="card-meta">${[v.brand, v.model, v.year].filter(Boolean).join(' · ') || 'Sin información'}</div>
+                        <div class="doc-grid">
+                            ${vDocs.map(d => renderDocItem(d, id)).join('') || '<span style="color:#9CA3AF;font-size:0.75rem">Sin documentos</span>'}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div><div class="section"><div class="section-header"><div class="section-title">Conductores</div><div class="section-badge">${dList.length}</div></div>`;
+            
+            if (!dList.length) html += '<div class="card"><div class="empty"><div class="empty-icon">👤</div>Sin conductores registrados</div></div>';
+            else dList.forEach(d => {
+                const dDocs = docList.filter(doc => doc.driver_id === d.id);
+                html += `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">${d.name}</div>
+                            <span class="card-badge${d.license_type ? ' green' : ''}">${d.license_type || '—'}</span>
+                        </div>
+                        <div class="card-meta">DNI ${d.dni}${d.license_number ? ' · Lic: ' + d.license_number : ''}</div>
+                        <div class="doc-grid">
+                            ${dDocs.map(doc => renderDocItem(doc, id)).join('') || ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            document.getElementById('content').innerHTML = html;
+        }
+        
+        function renderDocItem(d, companyId) {
+            const status = getDocStatus(d.expiry_date);
+            const dateStr = d.expiry_date ? formatDate(d.expiry_date) : '';
+            const icon = getDocIcon(d.doc_type);
+            const cleanPath = (d.file_path || '').replace(/"/g, '');
+            
+            return `<button class="doc-item ${status.class}" onclick="openDocument('${companyId}', '${cleanPath}', '${d.title.replace(/'/g, "\\'")}')">
+                <span class="doc-icon">${icon}</span>
+                <span class="doc-info">${d.title.split(' ').slice(0,4).join(' ')}</span>
+                ${dateStr ? `<span class="doc-date">${dateStr}</span>` : ''}
+            </button>`;
+        }
+        
+        function getDocStatus(expiry_date) {
+            if (!expiry_date) return { class: '', label: '' };
+            const parts = expiry_date.split('/');
+            if (parts.length !== 3) return { class: '', label: '' };
+            const exp = new Date(parts[2], parts[1]-1, parts[0]);
+            const now = new Date();
+            const diff = (exp - now) / (1000 * 60 * 60 * 24);
+            if (diff < 0) return { class: 'expired', label: 'Vencido' };
+            if (diff <= 60) return { class: 'vence-soon', label: 'Por vencer' };
+            return { class: '', label: '' };
+        }
+        
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const parts = dateStr.split('/');
+            if (parts.length !== 3) return dateStr;
+            return `${parts[0]}/${parts[1]}/${parts[2].slice(-2)}`;
+        }
+        
+        function getDocIcon(type) {
+            const icons = { 
+                soat:'🛡️', seguro:'📋', dgh:'📄', tarjeta_unica:'🎫', 
+                tarjeta_propiedad:'📱', licencia:'🪪', certificado_metrologico:'📐', 
+                plan_contingencia:'⚠️', bonificacion:'🎫', habilitacion:'✅',
+                antecedentes:'🔍', capacitacion:'📚', dni:'🪪'
+            };
+            return icons[type] || '📄';
+        }
+        
+        function openDocument(companyId, filePath, title) {
+            currentDocPath = `${FILE_API}/${companyId}/${filePath}`;
+            document.getElementById('pdfTitle').textContent = title;
+            const frame = document.getElementById('pdfFrame');
+            frame.src = currentDocPath;
+            document.getElementById('pdfModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePdf() {
+            document.getElementById('pdfModal').classList.remove('active');
+            document.getElementById('pdfFrame').src = '';
+            document.body.style.overflow = '';
+            currentDocPath = null;
+        }
+        
+        function openPdfExternal() {
+            if (currentDocPath) window.open(currentDocPath, '_blank');
+        }
+        
+        function downloadPdf() {
+            if (currentDocPath) {
+                const a = document.createElement('a');
+                a.href = currentDocPath;
+                a.download = currentDocPath.split('/').pop().split('?')[0];
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+        
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePdf(); });
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadData(); });
+        
+        loadData();
+    </script>
+</body>
+</html>
