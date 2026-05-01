@@ -436,7 +436,8 @@ def generate_order_pdf(company_id: str, order_id: str, db: SessionLocal = Depend
     sig_label_style = ParagraphStyle('SigLabel', parent=styles['Normal'], fontSize=7, textColor=gray, alignment=1)
     
     # Logo (LEFT) | Company Name (CENTER) | Order Number (RIGHT)
-    logo_path = "/Users/frankyucramendoza/Documents/FLEET/TransportesJesusEsVida/logo.png"
+    base_dir = os.path.expanduser("~/Documents/FLEET")
+    logo_path = os.path.join(base_dir, "TransportesJesusEsVida", "logo.png")
     try:
         logo_img = Image(logo_path, width=20*mm, height=20*mm)
     except:
@@ -716,7 +717,7 @@ async def serve_file(company_id: str, filename: str):
     if not folder_name:
         return JSONResponse({"error": "Company not found", "company_id": company_id})
     
-    base_path = "/Users/frankyucramendoza/Documents/FLEET"
+    base_path = os.path.expanduser("~/Documents/FLEET")
     
     # Try with folder name
     file_path = os.path.join(base_path, folder_name, filename)

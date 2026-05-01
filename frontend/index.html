@@ -5,12 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fleet Manager</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        :root {
+            --bg: #0B0C10;
+            --surface: rgba(30, 32, 41, 0.6);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --danger: #EF4444;
+            --danger-glow: rgba(239, 68, 68, 0.2);
+            --warning: #F59E0B;
+            --warning-glow: rgba(245, 158, 11, 0.2);
+            --success: #10B981;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #F3F4F6; 
-            color: #111827; 
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            background-attachment: fixed;
+            color: var(--text-main); 
             min-height: 100vh; 
             font-size: 14px;
             line-height: 1.5;
@@ -18,309 +39,400 @@
         }
         
         .header { 
-            background: #FFFFFF; 
-            padding: 16px 20px; 
+            background: rgba(11, 12, 16, 0.85); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 12px 16px; 
             position: sticky; 
             top: 0; 
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-bottom: 1px solid var(--surface-border);
         }
         .header-left { display: flex; align-items: center; gap: 12px; }
         .header-icon { 
             width: 36px; height: 36px;
-            background: linear-gradient(135deg, #1A1A1A 0%, #374151 100%);
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
             border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
             color: white; font-size: 1.1rem;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            flex-shrink: 0;
         }
-        .header-text h1 { font-size: 1rem; font-weight: 700; color: #111827; }
-        .header-text p { font-size: 0.7rem; color: #6B7280; }
-        .header button {
-            background: #F9FAFB;
-            border: 1px solid #E5E7EB;
-            padding: 10px 14px;
+        .header-text { display: flex; flex-direction: column; justify-content: center; }
+        .header-text h1 { font-size: 1rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; line-height: 1.2; }
+        .header-text p { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+        .btn-refresh {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--surface-border);
+            padding: 8px;
             border-radius: 10px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            color: #374151;
-            font-weight: 500;
-            transition: all 0.2s;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .header button:hover { background: #F3F4F6; }
-        .header button:active { transform: scale(0.98); }
+        .btn-refresh:hover { 
+            background: rgba(255,255,255,0.1); 
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .btn-refresh:active { transform: translateY(0); }
+        .btn-refresh .btn-text { display: none; }
         
         .tabs { 
             display: flex; 
-            gap: 8px; 
-            padding: 16px 20px; 
+            gap: 10px; 
+            padding: 20px 24px; 
             overflow-x: auto;
-            background: #FFFFFF;
-            border-bottom: 1px solid #E5E7EB;
+            border-bottom: 1px solid var(--surface-border);
         }
         .tabs::-webkit-scrollbar { display: none; }
         .tab { 
-            padding: 10px 18px; 
-            background: #F9FAFB; 
-            border-radius: 25px; 
-            font-size: 0.8rem; 
+            padding: 10px 20px; 
+            background: var(--surface); 
+            border-radius: 30px; 
+            font-size: 0.85rem; 
             white-space: nowrap; 
             cursor: pointer; 
-            border: 1px solid #E5E7EB;
-            color: #6B7280;
-            font-weight: 500;
-            transition: all 0.2s;
+            border: 1px solid var(--surface-border);
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .tab.active { 
-            background: #1A1A1A; 
-            color: #FFFFFF; 
-            border-color: #1A1A1A;
+            background: var(--text-main); 
+            color: var(--bg); 
+            border-color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(255,255,255,0.2);
         }
-        .tab:not(.active):hover { background: #F3F4F6; }
+        .tab:not(.active):hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
         
-        .content { padding: 20px; max-width: 900px; margin: 0 auto; }
+        .content { padding: 24px; max-width: 1000px; margin: 0 auto; }
         
         .stats-row { 
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px; 
-            margin-bottom: 24px; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; 
+            margin-bottom: 32px; 
         }
         .stat-card { 
-            background: #FFFFFF; 
-            border-radius: 16px; 
-            padding: 20px 16px; 
+            background: var(--surface); 
+            border-radius: 20px; 
+            padding: 24px; 
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            border: 1px solid #E5E7EB;
+            border: 1px solid var(--surface-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.15);
         }
         .stat-icon { 
-            width: 40px; height: 40px;
-            background: #F3F4F6;
-            border-radius: 12px;
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 10px;
-            font-size: 1.2rem;
+            margin: 0 auto 12px;
+            font-size: 1.4rem;
         }
         .stat-value { 
-            font-size: 1.75rem; 
-            font-weight: 700; 
-            color: #111827;
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            color: var(--text-main);
+            letter-spacing: -0.03em;
+            line-height: 1;
         }
         .stat-label { 
-            font-size: 0.7rem; 
-            color: #9CA3AF; 
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 4px;
-            font-weight: 500;
+            letter-spacing: 0.08em;
+            margin-top: 8px;
+            font-weight: 600;
         }
         
-        .section { margin-bottom: 24px; }
+        .section { margin-bottom: 32px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         .section-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center;
-            margin-bottom: 14px; 
+            margin-bottom: 16px; 
         }
         .section-title { 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            color: #374151; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            color: var(--text-main); 
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            display: flex; align-items: center; gap: 8px;
         }
         .section-badge {
-            background: #E5E7EB;
-            color: #6B7280;
-            padding: 4px 10px;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-main);
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 600;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border: 1px solid var(--surface-border);
         }
         
         .card { 
-            background: #FFFFFF; 
+            background: var(--surface); 
             border-radius: 16px; 
-            padding: 18px; 
-            margin-bottom: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-            border: 1px solid #E5E7EB;
+            padding: 20px; 
+            margin-bottom: 16px;
+            border: 1px solid var(--surface-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: border-color 0.3s ease;
         }
+        .card:hover { border-color: rgba(255,255,255,0.15); }
         
         .card-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            margin-bottom: 8px; 
+            margin-bottom: 6px; 
         }
         .card-title { 
-            font-size: 1rem; 
-            font-weight: 600; 
-            color: #111827;
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            color: var(--text-main);
+            letter-spacing: -0.01em;
         }
         .card-badge { 
-            background: #F3F4F6; 
-            color: #374151; 
+            background: rgba(255,255,255,0.05); 
+            color: var(--text-muted); 
             padding: 4px 10px; 
-            border-radius: 20px; 
+            border-radius: 8px; 
             font-size: 0.65rem;
-            font-weight: 600;
+            font-weight: 700;
+            border: 1px solid var(--surface-border);
+            text-transform: uppercase;
         }
-        .card-badge.green { background: #D1FAE5; color: #059669; }
-        .card-badge.yellow { background: #FEF3C7; color: #D97706; }
-        .card-badge.red { background: #FEE2E2; color: #DC2626; }
+        .card-badge.green { background: rgba(16, 185, 129, 0.1); color: var(--success); border-color: rgba(16, 185, 129, 0.2); }
+        .card-badge.yellow { background: var(--warning-glow); color: var(--warning); border-color: rgba(245, 158, 11, 0.2); }
+        .card-badge.red { background: var(--danger-glow); color: var(--danger); border-color: rgba(239, 68, 68, 0.2); }
         
         .card-meta { 
-            font-size: 0.8rem; 
-            color: #6B7280;
+            font-size: 0.85rem; 
+            color: var(--text-muted);
+            font-weight: 500;
         }
         
         .doc-grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 8px; 
-            margin-top: 12px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 10px; 
+            margin-top: 16px; 
         }
         .doc-item { 
-            background: #F9FAFB; 
-            padding: 10px 14px; 
-            border-radius: 10px; 
-            font-size: 0.75rem;
-            color: #374151;
+            background: rgba(255,255,255,0.03); 
+            padding: 12px 16px; 
+            border-radius: 12px; 
+            font-size: 0.8rem;
+            color: var(--text-main);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border: 1px solid #E5E7EB;
-            width: 100%;
+            gap: 10px;
+            border: 1px solid var(--surface-border);
+            text-align: left;
         }
-        .doc-item:hover { background: #F3F4F6; border-color: #D1D5DB; }
+        .doc-item:hover { 
+            background: rgba(255,255,255,0.08); 
+            border-color: rgba(255,255,255,0.2); 
+            transform: scale(1.02);
+        }
         .doc-item:active { transform: scale(0.98); }
-        .doc-item .doc-icon { font-size: 1rem; }
-        .doc-item .doc-info { flex: 1; font-weight: 500; }
+        .doc-item .doc-icon { font-size: 1.1rem; }
+        .doc-item .doc-info { flex: 1; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .doc-item .doc-date { 
-            font-size: 0.65rem; 
-            color: #9CA3AF;
-            font-weight: 500;
+            font-size: 0.7rem; 
+            color: var(--text-muted);
+            font-weight: 600;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 6px;
+            border-radius: 6px;
         }
-        .doc-item.vence-soon { background: #FEF3C7; border-color: #F59E0B; }
-        .doc-item.vence-soon .doc-date { color: #D97706; }
-        .doc-item.expired { background: #FEE2E2; border-color: #EF4444; }
-        .doc-item.expired .doc-date { color: #DC2626; }
+        .doc-item.vence-soon { 
+            background: var(--warning-glow); 
+            border-color: rgba(245, 158, 11, 0.3); 
+        }
+        .doc-item.vence-soon .doc-date { color: var(--warning); background: rgba(245, 158, 11, 0.1); }
+        .doc-item.expired { 
+            background: var(--danger-glow); 
+            border-color: rgba(239, 68, 68, 0.3); 
+        }
+        .doc-item.expired .doc-date { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
         
         .empty { 
             text-align: center; 
-            padding: 40px 20px; 
-            color: #9CA3AF; 
-            font-size: 0.85rem; 
+            padding: 48px 20px; 
+            color: var(--text-muted); 
+            font-size: 0.9rem; 
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px dashed rgba(255,255,255,0.1);
         }
-        .empty-icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
+        .empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.4; }
         
         .loading { 
             text-align: center; 
-            padding: 60px 20px; 
-            color: #9CA3AF; 
+            padding: 80px 20px; 
+            color: var(--text-muted); 
+            font-weight: 500;
         }
         .loading-spinner {
-            width: 32px; height: 32px;
-            border: 3px solid #E5E7EB;
-            border-top-color: #1A1A1A;
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 12px;
+            animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            margin: 0 auto 16px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* PDF Modal */
+        /* PDF Modal with Glassmorphism */
         #pdfModal {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             width: 100%; height: 100%;
-            background: #000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 9999;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        #pdfModal.active { display: flex; }
+        #pdfModal.active { display: flex; opacity: 1; }
+        .modal-box {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            background: rgba(11, 12, 16, 0.95);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            transform: scale(0.95) translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #pdfModal.active .modal-box { transform: scale(1) translateY(0); }
         .pdf-header {
-            background: #111;
-            padding: 12px 16px;
+            background: rgba(255,255,255,0.02);
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .pdf-title { 
-            font-size: 0.85rem; 
-            color: #fff; 
+            font-size: 1.05rem; 
+            color: white; 
             font-weight: 600;
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            padding-right: 16px;
         }
         .pdf-close {
-            background: #333;
-            color: #fff;
-            border: none;
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
             padding: 8px 14px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex; align-items: center; gap: 6px;
         }
+        .pdf-close:hover { background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.5); color: #FCA5A5; }
+        .pdf-close .lucide { width: 16px; height: 16px; }
         .pdf-content { 
             flex: 1;
-            overflow: auto;
             position: relative;
         }
         .pdf-content iframe { 
-            width: 100%; height: 100%; border: none; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; 
+            border: none; 
+            background: white;
         }
-        .pdf-actions { display: none; }
         
         .footer { 
             text-align: center; 
-            padding: 24px 20px; 
-            color: #9CA3AF; 
-            font-size: 0.7rem;
-            font-weight: 500;
+            padding: 32px 20px; 
+            color: var(--text-muted); 
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-top: 1px solid var(--surface-border);
+            margin-top: 20px;
         }
         
-        /* Responsive */
+        /* Responsive Design */
         @media (min-width: 768px) {
-            .content { padding: 28px 32px; }
-            .header { padding: 20px 28px; }
-            .header h1 { font-size: 1.15rem; }
-            .header-text p { font-size: 0.75rem; }
-            .tabs { padding: 16px 28px; gap: 10px; }
+            .header { padding: 16px 32px; }
+            .header-icon { width: 44px; height: 44px; font-size: 1.3rem; }
+            .header-text h1 { font-size: 1.25rem; }
+            .header-text p { font-size: 0.8rem; }
+            .btn-refresh { padding: 10px 18px; }
+            .btn-refresh .btn-text { display: inline; }
+            
+            .content { padding: 32px; }
+            .tabs { padding: 24px 32px; gap: 12px; }
             .tab { padding: 12px 24px; font-size: 0.9rem; }
-            .stats-row { gap: 20px; }
-            .stat-card { padding: 28px 24px; }
-            .stat-value { font-size: 2.25rem; }
-            .stat-label { font-size: 0.8rem; }
-            .section-title { font-size: 0.9rem; }
-            .card { padding: 22px; border-radius: 20px; }
-            .card-title { font-size: 1.1rem; }
-            .doc-item { width: auto; flex: 1; min-width: 200px; }
+            .stats-row { gap: 24px; }
+            .stat-card { padding: 32px 24px; }
+            .stat-value { font-size: 2.5rem; }
+            .stat-label { font-size: 0.85rem; }
+            .section-title { font-size: 1rem; }
+            .card { padding: 24px; border-radius: 20px; }
+            .card-title { font-size: 1.15rem; }
+            .doc-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+            .doc-item { padding: 14px 18px; font-size: 0.85rem; }
+            .doc-item .doc-icon { font-size: 1.2rem; }
         }
+        
+        /* Lucide Icons */
+        .lucide { stroke-width: 2; }
+        .header-icon .lucide { width: 22px; height: 22px; color: white; }
+        .btn-refresh .lucide { width: 16px; height: 16px; }
+        .stat-icon .lucide { width: 24px; height: 24px; color: var(--text-main); }
+        .doc-item .doc-icon .lucide { width: 16px; height: 16px; color: var(--text-muted); }
+        .empty-icon .lucide { width: 48px; height: 48px; stroke-width: 1.5; color: var(--text-muted); opacity: 0.5; }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-left">
-            <div class="header-icon">🚛</div>
+            <div class="header-icon"><i data-lucide="truck"></i></div>
             <div class="header-text">
                 <h1>Fleet Manager</h1>
                 <p>Sol Transportes</p>
             </div>
         </div>
-        <button onclick="refresh()">🔄 Actualizar</button>
+        <button class="btn-refresh" onclick="refresh()">
+            <i data-lucide="refresh-cw" class="btn-icon"></i>
+            <span class="btn-text">Actualizar</span>
+        </button>
     </div>
     
     <div class="tabs" id="companyTabs"></div>
@@ -335,12 +447,14 @@
     
     <!-- PDF Modal -->
     <div id="pdfModal">
-        <div class="pdf-header">
-            <div class="pdf-title" id="pdfTitle">Documento</div>
-            <button class="pdf-close" onclick="closePdf()">✕ Cerrar</button>
-        </div>
-        <div class="pdf-content">
-            <iframe id="pdfFrame" src=""></iframe>
+        <div class="modal-box">
+            <div class="pdf-header">
+                <div class="pdf-title" id="pdfTitle">Documento</div>
+                <button class="pdf-close" onclick="closePdf()"><i data-lucide="x"></i> Cerrar</button>
+            </div>
+            <div class="pdf-content">
+                <iframe id="pdfFrame" src=""></iframe>
+            </div>
         </div>
     </div>
 
@@ -364,7 +478,8 @@
         async function loadData() {
             const data = await get('/companies');
             if (!data?.companies) {
-                document.getElementById('content').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div>No se pudo conectar a la API</div>';
+                document.getElementById('content').innerHTML = '<div class="empty"><div class="empty-icon"><i data-lucide="alert-triangle"></i></div>No se pudo conectar a la API</div>';
+                lucide.createIcons();
                 return;
             }
             companies = data.companies;
@@ -394,17 +509,17 @@
             let html = `
                 <div class="stats-row">
                     <div class="stat-card">
-                        <div class="stat-icon">🚛</div>
+                        <div class="stat-icon"><i data-lucide="truck"></i></div>
                         <div class="stat-value">${vList.length}</div>
                         <div class="stat-label">Vehículos</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">👤</div>
+                        <div class="stat-icon"><i data-lucide="users"></i></div>
                         <div class="stat-value">${dList.length}</div>
                         <div class="stat-label">Conductores</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">📋</div>
+                        <div class="stat-icon"><i data-lucide="folder-open"></i></div>
                         <div class="stat-value">${docList.length}</div>
                         <div class="stat-label">Documentos</div>
                     </div>
@@ -417,7 +532,7 @@
                     </div>
             `;
             
-            if (!vList.length) html += '<div class="card"><div class="empty"><div class="empty-icon">🚛</div>Sin vehículos registrados</div></div>';
+            if (!vList.length) html += '<div class="card"><div class="empty"><div class="empty-icon"><i data-lucide="truck"></i></div>Sin vehículos registrados</div></div>';
             else vList.forEach(v => {
                 const vDocs = docList.filter(d => d.vehicle_id === v.id);
                 html += `
@@ -436,7 +551,7 @@
             
             html += `</div><div class="section"><div class="section-header"><div class="section-title">Conductores</div><div class="section-badge">${dList.length}</div></div>`;
             
-            if (!dList.length) html += '<div class="card"><div class="empty"><div class="empty-icon">👤</div>Sin conductores registrados</div></div>';
+            if (!dList.length) html += '<div class="card"><div class="empty"><div class="empty-icon"><i data-lucide="users"></i></div>Sin conductores registrados</div></div>';
             else dList.forEach(d => {
                 const dDocs = docList.filter(doc => doc.driver_id === d.id);
                 html += `
@@ -455,6 +570,7 @@
             
             html += '</div>';
             document.getElementById('content').innerHTML = html;
+            lucide.createIcons();
         }
         
         function renderDocItem(d, companyId) {
@@ -491,12 +607,13 @@
         
         function getDocIcon(type) {
             const icons = { 
-                soat:'🛡️', seguro:'📋', dgh:'📄', tarjeta_unica:'🎫', 
-                tarjeta_propiedad:'📱', licencia:'🪪', certificado_metrologico:'📐', 
-                plan_contingencia:'⚠️', bonificacion:'🎫', habilitacion:'✅',
-                antecedentes:'🔍', capacitacion:'📚', dni:'🪪'
+                soat:'shield-check', seguro:'shield', dgh:'file-text', tarjeta_unica:'credit-card', 
+                tarjeta_propiedad:'smartphone', licencia:'id-card', certificado_metrologico:'ruler', 
+                plan_contingencia:'alert-triangle', bonificacion:'ticket', habilitacion:'check-circle',
+                antecedentes:'search', capacitacion:'book-open', dni:'id-card'
             };
-            return icons[type] || '📄';
+            const iconName = icons[type] || 'file';
+            return `<i data-lucide="${iconName}"></i>`;
         }
         
         function openDocument(companyId, filePath, title) {
@@ -534,6 +651,7 @@
         document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadData(); });
         
         loadData();
+        lucide.createIcons();
     </script>
 </body>
 </html>
